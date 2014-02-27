@@ -1,0 +1,114 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_light_blue"
+    tools:context=".LoginActivity" >
+	
+    <!--
+     This FrameLayout is divided by three RelativeLayout
+     in vertical LinearLayout. This implies three rows. 
+     
+     HELP NOTE: The less you set layout_weight more area in the
+     screen will be used by this layout
+ -->
+	
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+		
+        <!-- First row -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.4" >
+			
+            <EditText
+                android:id="@+id/text_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:inputType="text"
+                android:background="@color/white"
+                android:ems="10"
+                android:gravity="center"
+                android:selectAllOnFocus="true"
+                android:textColor="@color/button_dark_blue" 
+                android:hint="Username" />
+			
+            <EditText
+                android:id="@+id/text_birthdate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/text_username"
+                android:layout_alignRight="@+id/text_username"
+                android:layout_below="@+id/text_username"
+                android:layout_marginTop="24dp"
+                android:background="@color/white"
+                android:ems="10"
+                android:gravity="center"
+                android:inputType="textPassword"
+                android:selectAllOnFocus="true"
+                android:textColor="@color/button_dark_blue" 
+                android:hint="Password" />
+        </RelativeLayout>
+		
+        <!-- Second row -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.4" >
+			
+            <Button
+                android:id="@+id/button_log_in"
+                style="?buttonBarButtonStyle"
+                android:layout_width="250dp"
+                android:layout_height="70dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="16dp"
+                android:background="@color/button_dark_blue"
+                android:text="@string/log_in_button_name"
+                android:textSize="30sp"
+                android:textStyle="bold" 
+                android:onClick="attemptLogIn"/>
+			
+            <Button
+                android:id="@+id/button_sign_up"
+                android:layout_width="150dp"
+                android:layout_height="40dp"
+                android:layout_below="@+id/button_log_in"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="30dp"
+                android:background="@color/button_dark_blue"
+                android:text="@string/sign_up_button_name"
+                android:textStyle="bold" 
+                android:onClick="signUpScreen"/>
+        </RelativeLayout>
+		
+        <!-- Third row -->
+		
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5" >
+			
+            <TextView
+                android:id="@+id/logo_meety_log_in"
+                android:layout_width="match_parent"
+                android:layout_height="79dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:gravity="center"
+                android:keepScreenOn="true"
+                android:text="@string/project_name"
+                android:textColor="#33b5e5"
+                android:textSize="50sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+    </LinearLayout>
+	
+</FrameLayout>

@@ -1,0 +1,87 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_light_blue"
+    tools:context=".AttemptingMeetySession" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <!-- First row -->
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.4" >
+
+            <TextView
+                android:id="@+id/text_attempting_meety_session"
+                android:layout_width="match_parent"
+                android:layout_height="79dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:gravity="center"
+                android:keepScreenOn="true"
+                android:text="attempting meety session"
+                android:textColor="#FFFFFF"
+                android:textSize="25sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
+        <!-- Second row -->
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.4" >
+
+            <ProgressBar
+                android:id="@+id/progressBarViewAttMeetySession"
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:id="@+id/text_answer_fail"
+                android:layout_width="match_parent"
+                android:layout_height="79dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:gravity="center"
+                android:keepScreenOn="true"
+                android:text="user offline"
+                android:textColor="#FFFFFF"
+                android:textSize="35sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
+        <!-- Third row -->
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5" >
+
+            <TextView
+                android:id="@+id/logo_meety_not_session"
+                android:layout_width="match_parent"
+                android:layout_height="79dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:gravity="center"
+                android:keepScreenOn="true"
+                android:text="meety"
+                android:textColor="#33b5e5"
+                android:textSize="50sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</RelativeLayout>
