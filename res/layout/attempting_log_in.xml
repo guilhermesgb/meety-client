@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_light_blue"
-    tools:context=".AttemptingLogIn" >
+    tools:context=".AttemptingLogin" >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,7 +25,7 @@
                 android:layout_alignParentLeft="true"
                 android:gravity="center"
                 android:keepScreenOn="true"
-                android:text="attempting logIn"
+                android:text="attempting login"
                 android:textColor="#FFFFFF"
                 android:textSize="25sp"
                 android:textStyle="bold" />

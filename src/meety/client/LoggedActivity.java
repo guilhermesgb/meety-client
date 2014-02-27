@@ -15,8 +15,6 @@ public class LoggedActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.logged);
-		System.out.println("LoggedInActivity");
-
 	}
 
 	@Override
@@ -28,7 +26,6 @@ public class LoggedActivity extends Activity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		System.out.println("item menu >>> " + item.getItemId());
 		int itemId = item.getItemId();
 		if (itemId == R.id.about) {
 			// TODO method call for "about"
@@ -44,11 +41,6 @@ public class LoggedActivity extends Activity {
 		}
 	}
 
-	/**
-	 * Send Meety Session Request
-	 * 
-	 * @param view
-	 */
 	public void sessionRequest(View view) {
 		// TODO Popup window to inform that the status of the request: 'calling'
 		// or 'missed'

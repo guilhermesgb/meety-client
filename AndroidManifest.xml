@@ -43,40 +43,40 @@
             android:theme="@style/FullscreenTheme" >
         </activity>
         <activity
-            android:name="meety.client.AttemptingLogin"
+            android:name="meety.client.AttemptingLoginActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_attempting_log_in"
             android:screenOrientation="portrait"
             android:theme="@style/FullscreenTheme" >
         </activity>
         <activity
-            android:name="meety.client.MeetySession"
+            android:name="meety.client.MeetySessionActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_meety_session"
             android:theme="@style/FullscreenTheme" >
         </activity>
         <activity
-            android:name="meety.client.AttemptingMeetySession"
+            android:name="meety.client.AttemptingMeetySessionActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_attempting_meety_session"
             android:screenOrientation="portrait"
             android:theme="@style/FullscreenTheme" >
         </activity>
-		
+		<activity
+            android:name="meety.client.SignUpActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_sign_up" 
+            android:screenOrientation="portrait"
+            android:theme="@style/FullscreenTheme"  >
+        </activity>
+        		
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyCpPRUm8gR_xForKOwHR2o7OTEJz-zCejA" />
-			
-        <activity
-            android:name="meety.client.SignUpScreenActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_sign_up" 
-            android:screenOrientation="portrait"
-            android:theme="@style/FullscreenTheme"  >
-        </activity>
+
     </application>
 
 </manifest>

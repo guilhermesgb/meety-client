@@ -18,7 +18,7 @@ import com.google.android.gms.maps.model.LatLng;
  * @author Tales Tenorio de Souza Pimentel - tales.tsp@gmail.com
  *
  */
-public class MeetySession extends Activity {
+public class MeetySessionActivity extends Activity {
 	
 	GoogleMap gMap;
 	CameraPosition cameraPosition;

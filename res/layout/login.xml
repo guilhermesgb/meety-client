@@ -73,7 +73,7 @@
                 android:text="@string/log_in_button_name"
                 android:textSize="30sp"
                 android:textStyle="bold" 
-                android:onClick="attemptLogIn"/>
+                android:onClick="attemptLogin"/>
 			
             <Button
                 android:id="@+id/button_sign_up"

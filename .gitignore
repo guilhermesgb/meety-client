@@ -29,3 +29,4 @@ proguard-project.txt
 # Other
 .settings
 .DS_Store
+lint.xml
