@@ -1,7 +1,9 @@
 package meety.client.http;
 
 import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -74,11 +76,27 @@ public abstract class HttpUtils {
 					
 					String responseMessage = urlConn.getResponseMessage();
 					int responseCode = urlConn.getResponseCode();
+					String responseBody = "";
+
+					try {
+						BufferedReader in = new BufferedReader(
+						        new InputStreamReader(urlConn.getInputStream()));
+						String inputLine;
+						StringBuffer response = new StringBuffer();
+				 
+						while ((inputLine = in.readLine()) != null) {
+							response.append(inputLine);
+						}
+						in.close();
+						responseBody = response.toString();
+					} catch(IOException e){
+						e.printStackTrace();
+					}
 					
 					JSONObject JSONResponse = new JSONObject();
 					JSONResponse.put("message", responseMessage);
 					JSONResponse.put("code", responseCode);
-					
+					JSONResponse.put("body", responseBody);
 					return JSONResponse;
 				}
 				finally{

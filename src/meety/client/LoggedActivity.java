@@ -1,12 +1,22 @@
 package meety.client;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import meety.client.http.HttpUtils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 
 public class LoggedActivity extends Activity {
@@ -41,15 +51,61 @@ public class LoggedActivity extends Activity {
 		}
 	}
 
+	private boolean doIsLoggedHTTPRequest(){
+
+		Context context = getApplicationContext();
+		int duration = Toast.LENGTH_SHORT;
+
+		CharSequence toastText = "Checking 'who is logged' status...";
+		Toast toast = Toast.makeText(context, toastText, duration);
+		toast.show();
+		
+		Map<String, String> pairs = new HashMap<String, String>();
+		pairs.put("Host", "meety-server.herokuapp.com");
+		pairs.put("Accept", "application/json");
+		JSONObject headers = new JSONObject(pairs);
+
+		JSONObject response = HttpUtils.
+				doGETHttpRequest("http://meety-server.herokuapp.com/logged", headers);
+
+		if ( response == null ){
+			return false;
+		} else
+			try {
+				Integer responseCode = (Integer) response.get("code");
+				String responseMessage = (String) response.get("message");
+				String responseBody = (String) response.get("body");
+				System.out.println("GOT RESPONSE CODE: " + responseCode.toString());
+				System.out.println("GOT RESPONSE MESSAGE: " + responseMessage);
+
+				if ( responseCode == 200 ){
+
+					toastText = responseBody;
+					toast = Toast.makeText(context, toastText, duration);
+					toast.show();
+					
+					return true;
+				}
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			return false;
+	}
+	
 	public void sessionRequest(View view) {
-		// TODO Popup window to inform that the status of the request: 'calling'
-		// or 'missed'
+//		// TODO Popup window to inform that the status of the request: 'calling'
+//		// or 'missed'
+//
+		doIsLoggedHTTPRequest();
 
 		boolean startSession = true;
 
 		if (startSession) {
 			attemptMeetySession();
 		}
+		
 	}
 
 	private void attemptMeetySession() {
