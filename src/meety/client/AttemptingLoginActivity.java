@@ -1,9 +1,12 @@
 package meety.client;
 
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
+
+import meety.client.http.HttpUtils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
@@ -40,56 +43,48 @@ public class AttemptingLoginActivity extends Activity {
 		}, 2000);
 	}
 
+	private boolean doLoginHTTPRequest(String username, String password){
+
+		Map<String, String> pairs = new HashMap<String, String>();
+		pairs.put("Host", "meety-server.herokuapp.com");
+		pairs.put("Accept", "application/json");
+		pairs.put("Authorization", "Basic "+
+				Base64.encodeToString((username+":"+password).getBytes(), Base64.NO_WRAP));
+		JSONObject headers = new JSONObject(pairs);
+		
+		JSONObject response = HttpUtils.doPOSTHttpRequest("http://meety-server.herokuapp.com/login", headers);
+		if ( response == null ){
+			return false;
+		} else
+			try {
+				Integer responseCode = (Integer) response.get("code");
+				String responseMessage = (String) response.get("message");
+				System.out.println("GOT RESPONSE CODE: " + responseCode.toString());
+				System.out.println("GOT RESPONSE MESSAGE: " + responseMessage);
+				if ( responseCode == 200 ){
+					return true;
+				}
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			return false;
+	}
+	
 	private void attemptLogin(Intent intentFromPreviousActivity) {
 		String username = intentFromPreviousActivity.getStringExtra("username");
 		String password = intentFromPreviousActivity.getStringExtra("password");
 		
 		System.out.println("ATTEMPTING LOGIN!");
-		
-		try {
-			URL url;
-			HttpURLConnection urlConn;
-//			DataOutputStream printout;
-			url = new URL ("http://meety-server.herokuapp.com/login");
-			urlConn = (HttpURLConnection)url.openConnection();
-			urlConn.setRequestMethod("POST");
-//			urlConn.setDoInput (true);
-//			urlConn.setDoOutput (true);
-			urlConn.setUseCaches (false);
-//			urlConn.setRequestProperty("Content-Type","application/json");   
-			urlConn.setRequestProperty("Host", "meety-server.herokuapp.com");
-			urlConn.setRequestProperty("Authorization", "Basic "+
-					Base64.encodeToString((username+":"+password).getBytes(), Base64.DEFAULT));
-			System.out.println("ABOUT TO ISSUE REQUEST TO SERVER");
-			urlConn.connect();
-//			//Create JSONObject here
-//			JSONObject jsonParam = new JSONObject();
-//			jsonParam.put("username", username);
-//			jsonParam.put("password", password);
-//			printout = new DataOutputStream(urlConn.getOutputStream ());
-//			printout.writeUTF(URLEncoder.encode(jsonParam.toString(),"UTF-8"));
-//			printout.flush ();
-//			printout.close ();
-
-			System.out.println("AWAITING RESPONSE");
-			int httpResult =urlConn. getResponseCode();
-		    if(httpResult ==HttpURLConnection.HTTP_OK){
-		    	System.out.println("RESPONSE OK");
-				callLoggedInActivity();
-		    }else{
-		    	System.out.println("RESPONSE FAIL: "+Integer.toString(httpResult));
-		    }
-		}catch (MalformedURLException e){
-			System.out.print("MALFORMED URL => ");
-			System.out.println(e.getMessage());
-		}catch (IOException e){
-			System.out.print("IO EXCEPTION => ");
-			System.out.println(e.getMessage());
-//		}catch (Exception e){
-//			System.out.print("WTF just happened?? => ");
-//			System.out.println(e.getMessage());
+		if ( doLoginHTTPRequest(username, password) ){
+			System.out.println("LOGGED IN!");
+			callLoggedInActivity();
 		}
-    	denyLogIn();
+		else {
+			System.out.println("COULD NOT LOGIN!");
+			denyLogIn();
+		}
 	}
 
 	

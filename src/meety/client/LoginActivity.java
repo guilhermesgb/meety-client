@@ -15,25 +15,25 @@ public class LoginActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login);
 	}
-
+	
 	public void attemptLogin(View view){
 		
-		final EditText userNameText = (EditText) findViewById(R.id.text_username);
-		final EditText passwordText = (EditText) findViewById(R.id.text_birthdate);
+		final EditText usernameText = (EditText) findViewById(R.id.text_username);
+		final EditText passwordText = (EditText) findViewById(R.id.text_password);
 		
-		if(TextUtils.isEmpty(userNameText.getText().toString()) && TextUtils.isEmpty(passwordText.getText().toString())) {
-			userNameText.setText("username");
+		if(TextUtils.isEmpty(usernameText.getText().toString()) && TextUtils.isEmpty(passwordText.getText().toString())) {
+			usernameText.setText("username");
 			passwordText.setText("password");
-		}	
+		}
 		
         Intent intent = new Intent(this, AttemptingLoginActivity.class);
-        intent.putExtra("username", userNameText.getText().toString());
+        intent.putExtra("username", usernameText.getText().toString());
         intent.putExtra("password", passwordText.getText().toString());
         startActivity(intent);
         
 	}
 	
-	public void signUpScreen (View view){
+	public void signUpScreen(View view){
         Intent intent = new Intent(this, SignUpActivity.class);
         startActivity(intent);
 	}
