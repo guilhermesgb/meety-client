@@ -1,5 +1,6 @@
 package meety.client;
 
+import java.net.HttpCookie;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,7 +11,6 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -100,17 +100,21 @@ public class LoggedActivity extends Activity {
 //
 		doIsLoggedHTTPRequest();
 
-		boolean startSession = true;
-
-		if (startSession) {
-			attemptMeetySession();
+		System.out.println("HEY COOKIES!");
+		for ( HttpCookie cookie : HttpUtils.cookieManager.getCookieStore().getCookies() ){
+			System.out.println(cookie.getDomain() + " ::: " + cookie.getValue());
 		}
+//		boolean startSession = true;
+//
+//		if (startSession) {
+//			attemptMeetySession();
+//		}
 		
 	}
 
-	private void attemptMeetySession() {
-		Intent intentAttMS = new Intent(this, AttemptingMeetySessionActivity.class);
-		startActivity(intentAttMS);
-	}
+//	private void attemptMeetySession() {
+//		Intent intentAttMS = new Intent(this, AttemptingMeetySessionActivity.class);
+//		startActivity(intentAttMS);
+//	}
 
 }

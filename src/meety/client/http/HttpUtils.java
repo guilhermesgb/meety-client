@@ -5,6 +5,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.net.CookieHandler;
+import java.net.CookieManager;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -18,15 +20,24 @@ import android.os.Build;
 
 public abstract class HttpUtils {
 
-	{
+	public static CookieManager cookieManager;
+	static {
 		disableConnectionReuseIfNecessary();
+		enableCookieManagement();
 	}
 	
-	private void disableConnectionReuseIfNecessary(){
+	private static void disableConnectionReuseIfNecessary(){
 	    // Http connection reuse which was buggy pre-froyo
 	    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.FROYO) {
 	        System.setProperty("http.keepAlive", "false");
 	    }
+	}
+
+	private static void enableCookieManagement(){
+		cookieManager = new CookieManager();
+		CookieHandler.setDefault(cookieManager);
+		System.out.println("COOKIE MANAGEMENT SET!");
+		System.out.println("COOKIE STORE: "+cookieManager.getCookieStore());
 	}
 
 	private static class HttpRequestExecutor extends AsyncTask<String, Void, JSONObject>{
@@ -129,6 +140,7 @@ public abstract class HttpUtils {
 	}
 	
 	private static JSONObject doHttpRequest(String method, String url, JSONObject headers, JSONObject payload){
+
 		HttpRequestExecutor executor = (HttpRequestExecutor) new HttpRequestExecutor();
 		executor.execute(method, url,
 				headers != null ? headers.toString() : null,
@@ -156,8 +168,4 @@ public abstract class HttpUtils {
 		return doHttpRequest("POST", url, headers, payload);
 	}
 	
-//	private void enableCookieManagement(){
-////		CookieManager cookieManager = CookieManager.getInstance();
-//		CookieHandler.setDefault(CookieManager);
-//	}
 }
