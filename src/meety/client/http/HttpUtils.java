@@ -12,9 +12,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Iterator;
 import java.util.concurrent.ExecutionException;
-
 import org.json.JSONObject;
-
+import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.os.Build;
 
@@ -36,12 +35,11 @@ public abstract class HttpUtils {
 	private static void enableCookieManagement(){
 		cookieManager = new CookieManager();
 		CookieHandler.setDefault(cookieManager);
-		System.out.println("COOKIE MANAGEMENT SET!");
-		System.out.println("COOKIE STORE: "+cookieManager.getCookieStore());
 	}
 
 	private static class HttpRequestExecutor extends AsyncTask<String, Void, JSONObject>{
 
+		@SuppressLint("DefaultLocale")
 		@Override
 		protected JSONObject doInBackground(String... params) {
 

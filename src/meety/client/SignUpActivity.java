@@ -69,9 +69,6 @@ public class SignUpActivity extends Activity {
 		} else
 			try {
 				Integer responseCode = (Integer) response.get("code");
-				String responseMessage = (String) response.get("message");
-				System.out.println("GOT RESPONSE CODE: " + responseCode.toString());
-				System.out.println("GOT RESPONSE MESSAGE: " + responseMessage);
 				if ( responseCode == 200 ){
 					return true;
 				}

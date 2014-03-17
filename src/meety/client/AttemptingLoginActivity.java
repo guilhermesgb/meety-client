@@ -58,9 +58,6 @@ public class AttemptingLoginActivity extends Activity {
 		} else
 			try {
 				Integer responseCode = (Integer) response.get("code");
-				String responseMessage = (String) response.get("message");
-				System.out.println("GOT RESPONSE CODE: " + responseCode.toString());
-				System.out.println("GOT RESPONSE MESSAGE: " + responseMessage);
 				if ( responseCode == 200 ){
 					return true;
 				}
@@ -76,13 +73,10 @@ public class AttemptingLoginActivity extends Activity {
 		String username = intentFromPreviousActivity.getStringExtra("username");
 		String password = intentFromPreviousActivity.getStringExtra("password");
 		
-		System.out.println("ATTEMPTING LOGIN!");
 		if ( doLoginHTTPRequest(username, password) ){
-			System.out.println("LOGGED IN!");
 			callLoggedInActivity();
 		}
 		else {
-			System.out.println("COULD NOT LOGIN!");
 			denyLogIn();
 		}
 	}

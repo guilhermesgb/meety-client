@@ -1,6 +1,5 @@
 package meety.client;
 
-import java.net.HttpCookie;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -73,10 +72,7 @@ public class LoggedActivity extends Activity {
 		} else
 			try {
 				Integer responseCode = (Integer) response.get("code");
-				String responseMessage = (String) response.get("message");
 				String responseBody = (String) response.get("body");
-				System.out.println("GOT RESPONSE CODE: " + responseCode.toString());
-				System.out.println("GOT RESPONSE MESSAGE: " + responseMessage);
 
 				if ( responseCode == 200 ){
 
@@ -100,10 +96,6 @@ public class LoggedActivity extends Activity {
 //
 		doIsLoggedHTTPRequest();
 
-		System.out.println("HEY COOKIES!");
-		for ( HttpCookie cookie : HttpUtils.cookieManager.getCookieStore().getCookies() ){
-			System.out.println(cookie.getDomain() + " ::: " + cookie.getValue());
-		}
 //		boolean startSession = true;
 //
 //		if (startSession) {
