@@ -113,13 +113,13 @@ public abstract class HttpUtils {
 				}
 				
 			} catch (MalformedURLException e) {
-				System.out.println("MALFORMED URL");
+				System.err.println("MALFORMED URL");
 				e.printStackTrace();
 			} catch (IOException e){
-				System.out.println("IO EXCEPTION");
+				System.err.println("IO EXCEPTION");
 				e.printStackTrace();
 			} catch (Exception e){
-				System.out.println("EXCEPTION: " + e.getMessage());
+				System.err.println("EXCEPTION: " + e.getMessage());
 				e.printStackTrace();
 			}
 			return null;
@@ -132,7 +132,7 @@ public abstract class HttpUtils {
 				System.out.println(result.toString());
 			}
 			else{
-				System.out.println("WAS NULL");
+				System.err.println("WAS NULL");
 			}
 		}
 	}

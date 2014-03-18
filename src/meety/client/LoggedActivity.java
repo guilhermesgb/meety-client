@@ -10,6 +10,7 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -94,19 +95,19 @@ public class LoggedActivity extends Activity {
 //		// TODO Popup window to inform that the status of the request: 'calling'
 //		// or 'missed'
 //
-		doIsLoggedHTTPRequest();
+//		doIsLoggedHTTPRequest();
 
-//		boolean startSession = true;
-//
-//		if (startSession) {
-//			attemptMeetySession();
-//		}
+		boolean startSession = true;
+
+		if (startSession) {
+			attemptMeetySession();
+		}
 		
 	}
 
-//	private void attemptMeetySession() {
-//		Intent intentAttMS = new Intent(this, AttemptingMeetySessionActivity.class);
-//		startActivity(intentAttMS);
-//	}
+	private void attemptMeetySession() {
+		Intent intentAttMS = new Intent(this, AttemptingMeetySessionActivity.class);
+		startActivity(intentAttMS);
+	}
 
 }

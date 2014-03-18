@@ -73,7 +73,7 @@ public class AttemptingLoginActivity extends Activity {
 		String username = intentFromPreviousActivity.getStringExtra("username");
 		String password = intentFromPreviousActivity.getStringExtra("password");
 		
-		if ( doLoginHTTPRequest(username, password) ){
+		if ( doLoginHTTPRequest(username, password) || (username.equals("username") && password.equals("password") ) ){ //just to enable login skipts
 			callLoggedInActivity();
 		}
 		else {
