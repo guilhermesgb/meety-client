@@ -10,8 +10,11 @@ import android.os.Bundle;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 /**
  * 
@@ -22,6 +25,7 @@ public class MeetySessionActivity extends Activity {
 	
 	GoogleMap gMap;
 	CameraPosition cameraPosition;
+	Marker currentPosition;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -53,15 +57,17 @@ public class MeetySessionActivity extends Activity {
 	
     private void makeUseOfNewLocation(Location location) {
     	
+    	LatLng newpos = new LatLng(location.getLatitude(), location.getLongitude());
+    	
 		cameraPosition = new CameraPosition.Builder()
-		.target(new LatLng(location.getLatitude(), location.getLongitude()))                                 
+		.target(newpos)                                 
 	    .zoom(19)                   
 	    .bearing(0)                
 	    .tilt(30)                   
 	    .build(); 
 		gMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 		gMap.setBuildingsEnabled(true);
-
+		currentPosition.setPosition(newpos);
 	}
 
 	private void startMap() {
@@ -69,15 +75,17 @@ public class MeetySessionActivity extends Activity {
 		gMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.id_googlemap)).getMap();
 		gMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
 		
+		LatLng pos = new LatLng(-7.2290, -35.9);
+		
 		cameraPosition = new CameraPosition.Builder()
-		.target(new LatLng(-7.2290, -35.9))
+		.target(pos)
 	    .zoom(18)                   
 	    .bearing(0)                
 	    .tilt(30)                   
 	    .build(); 
 		gMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 		gMap.setBuildingsEnabled(true);
-	
+		currentPosition = gMap.addMarker(new MarkerOptions().position(pos).title("You").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
 		
 	}
 
