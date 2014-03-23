@@ -16,16 +16,11 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-/**
- * 
- * @author Tales Tenorio de Souza Pimentel - tales.tsp@gmail.com
- *
- */
 public class MeetySessionActivity extends Activity {
 	
-	GoogleMap gMap;
-	CameraPosition cameraPosition;
-	Marker currentPosition;
+	private GoogleMap gMap;
+	private CameraPosition cameraPosition;
+	private Marker currentPosition = null;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -64,29 +59,23 @@ public class MeetySessionActivity extends Activity {
 	    .zoom(19)                   
 	    .bearing(0)                
 	    .tilt(30)                   
-	    .build(); 
+	    .build();
 		gMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-		gMap.setBuildingsEnabled(true);
+		if ( currentPosition == null ){
+			currentPosition = gMap.addMarker(new MarkerOptions()
+			.position(newpos)
+			.title("You")
+			.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+		}
 		currentPosition.setPosition(newpos);
 	}
 
 	private void startMap() {
 		
 		gMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.id_googlemap)).getMap();
-		gMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-		
-		LatLng pos = new LatLng(-7.2290, -35.9);
-		
-		cameraPosition = new CameraPosition.Builder()
-		.target(pos)
-	    .zoom(18)                   
-	    .bearing(0)                
-	    .tilt(30)                   
-	    .build(); 
-		gMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+		gMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 		gMap.setBuildingsEnabled(true);
-		currentPosition = gMap.addMarker(new MarkerOptions().position(pos).title("You").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
-		
+
 	}
 
 }

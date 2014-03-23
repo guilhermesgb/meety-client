@@ -95,7 +95,7 @@ public class LoggedActivity extends Activity {
 //		// TODO Popup window to inform that the status of the request: 'calling'
 //		// or 'missed'
 //
-//		doIsLoggedHTTPRequest();
+		doIsLoggedHTTPRequest();
 
 		boolean startSession = true;
 

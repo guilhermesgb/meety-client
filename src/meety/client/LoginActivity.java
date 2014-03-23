@@ -25,12 +25,11 @@ public class LoginActivity extends Activity {
 			usernameText.setText("username");
 			passwordText.setText("password");
 		}
-		
+
         Intent intent = new Intent(this, AttemptingLoginActivity.class);
         intent.putExtra("username", usernameText.getText().toString());
         intent.putExtra("password", passwordText.getText().toString());
         startActivity(intent);
-        
 	}
 	
 	public void signUpScreen(View view){

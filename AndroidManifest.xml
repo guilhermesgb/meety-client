@@ -9,12 +9,22 @@
 		android:required="true" />
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
-	
-    <uses-sdk
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+	<uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+
+	<permission android:name="meety.client.permission.C2D_MESSAGE" android:protectionLevel="signature" />
+	<uses-permission android:name="meety.client.permission.C2D_MESSAGE" />
+
+	<uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+		<uses-permission android:name="android.permission.GET_ACCOUNTS" />
+	<uses-permission android:name="android.permission.WAKE_LOCK" />
+				
+
+	<uses-sdk
         android:minSdkVersion="11"
         android:targetSdkVersion="18" />
 
@@ -41,6 +51,10 @@
             android:label="@string/title_activity_logged_in"
             android:screenOrientation="portrait"
             android:theme="@style/FullscreenTheme" >
+            <intent-filter>
+				<action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+				<category android:name="meety.client" />
+			</intent-filter>
         </activity>
         <activity
             android:name="meety.client.AttemptingLoginActivity"
@@ -76,6 +90,36 @@
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyCpPRUm8gR_xForKOwHR2o7OTEJz-zCejA" />
+
+        <receiver
+            android:name="com.google.android.gcm.GCMBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+                <category android:name="meety.client" />
+            </intent-filter>
+        </receiver>
+        
+        <service android:name=".GCMIntentServiceOld" />
+
+        <!--
+          WakefulBroadcastReceiver that will receive intents from GCM
+          services and hand them to the custom IntentService.
+
+          The com.google.android.c2dm.permission.SEND permission is necessary
+          so only GCM services can send data messages for the app.
+        -->
+<!--         <receiver -->
+<!--             android:name=".GcmBroadcastReceiver" -->
+<!--             android:permission="com.google.android.c2dm.permission.SEND" > -->
+<!--             <intent-filter> -->
+<!--                 Receives the actual messages. -->
+<!--                 <action android:name="com.google.android.c2dm.intent.RECEIVE" /> -->
+<!--                 <category android:name="com.google.android.gcm.demo.app" /> -->
+<!--             </intent-filter> -->
+<!--         </receiver> -->
+<!--         <service android:name=".GcmIntentService" /> -->
 
     </application>
 
