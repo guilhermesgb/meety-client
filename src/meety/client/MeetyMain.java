@@ -140,13 +140,26 @@ public class MeetyMain extends Activity {
 							.setCancelable(false)
 							.setPositiveButton("Accept",new DialogInterface.OnClickListener() {
 								public void onClick(DialogInterface dialog,int id) {
-									doAnswerCallHTTPRequest(sender, "accepted");
-									dialog.cancel();
+									if ( doAnswerCallHTTPRequest(sender, "accepted") ){
+										CharSequence toastText = "You've just accepted call from "+sender+"...";
+										Toast toast = Toast.makeText(context, toastText, Toast.LENGTH_SHORT);
+										toast.show();
+										dialog.cancel();
+									}
+									else{
+										CharSequence toastText = sender+" has cancelled the call...";
+										Toast toast = Toast.makeText(context, toastText, Toast.LENGTH_SHORT);
+										toast.show();
+									}
 								}
 							})
 							.setNegativeButton("Decline",new DialogInterface.OnClickListener() {
 								public void onClick(DialogInterface dialog,int id) {
-									doAnswerCallHTTPRequest(sender, "denied");
+									if ( doAnswerCallHTTPRequest(sender, "denied") ){
+										CharSequence toastText = "You've just denied call from "+sender+"...";
+										Toast toast = Toast.makeText(context, toastText, Toast.LENGTH_SHORT);
+										toast.show();
+									}
 									dialog.cancel();
 
 									handler.postDelayed(new Runnable() {
