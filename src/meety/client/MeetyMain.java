@@ -376,6 +376,11 @@ public class MeetyMain extends Activity {
 		else if ( requestCode == MeetySession.REQUEST_CODE ){
 			if ( resultCode == MeetySession.RESULT_CODE_OK ){
 				startActivity();
+			}else{
+				CharSequence toastText = "IT SEEMS LIKE THE SESSION WAS ABORTED UNEXPECTEDLY";
+				Toast toast = Toast.makeText(getApplicationContext(), toastText, Toast.LENGTH_LONG);
+				toast.show();
+				startActivity();
 			}
 		}
 	}
