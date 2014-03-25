@@ -65,6 +65,17 @@
 			    android:text="cancel call"
 			    android:textStyle="bold" />
 
+			<Button
+			    android:id="@+id/meety_main_session_logout_button"
+			    android:layout_width="150dp"
+			    android:layout_height="40dp"
+			    android:layout_alignParentBottom="true"
+			    android:layout_centerHorizontal="true"
+			    android:background="@color/button_dark_blue"
+			    android:onClick="logout"
+			    android:text="logout"
+			    android:textStyle="bold" />
+			
 			<ProgressBar
 			    android:id="@+id/meeety_main_progress"
 			    style="?android:attr/progressBarStyleLarge"

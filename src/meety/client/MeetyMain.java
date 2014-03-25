@@ -184,6 +184,7 @@ public class MeetyMain extends Activity {
 					return true;
 				}
 			} catch (Exception e) {
+				MeetyMain.WAIT_FOR_CALL = false;
 				System.out.println("doMonitorCallsHTTPRequest EXCEPTION");
 				CharSequence toastText = "doMonitorCallsHTTPRequest EXCEPTION";
 				Toast toast = Toast.makeText(context, toastText, Toast.LENGTH_LONG);
@@ -312,6 +313,7 @@ public class MeetyMain extends Activity {
 					return true;
 				}
 			} catch (Exception e) {
+				MeetyMain.WAIT_FOR_RESPONSE = false;
 				System.out.println("doWaitForResponseHTTPRequest EXCEPTION");
 				CharSequence toastText = "doWaitForResponseHTTPRequest EXCEPTION";
 				Toast toast = Toast.makeText(context, toastText, Toast.LENGTH_LONG);
@@ -346,11 +348,39 @@ public class MeetyMain extends Activity {
 				startCallButton.setVisibility(View.VISIBLE);
 				final Button cancelCallButton = (Button) activity.findViewById(R.id.meety_main_session_cancel_button);
 				cancelCallButton.setVisibility(View.INVISIBLE);
+				final Button logoutButton = (Button) activity.findViewById(R.id.meety_main_session_logout_button);
+				logoutButton.setVisibility(View.VISIBLE);
 				final ProgressBar progressBar = (ProgressBar) activity.findViewById(R.id.meeety_main_progress);
-				progressBar.setVisibility(View.INVISIBLE);				
+				progressBar.setVisibility(View.INVISIBLE);
 			}
 		}
 		
+	}
+	
+	private static boolean doLogoutHTTPRequest(Context context){
+
+		Map<String, String> pairs = new HashMap<String, String>();
+		pairs.put("Host", "meety-server.herokuapp.com");
+		pairs.put("Accept", "application/json");
+		JSONObject headers = new JSONObject(pairs);
+		
+		JSONObject response = HttpUtils.doPOSTHttpRequest("http://meety-server.herokuapp.com/logout", headers);
+		if ( response == null ){
+			return false;
+		} else
+			try {
+				Integer responseCode = (Integer) response.get("code");
+				if ( responseCode == 200 ){
+					return true;
+				}
+			} catch (Exception e) {
+				System.out.println("doLoginHTTPRequest EXCEPTION");
+				CharSequence toastText = "doLoginHTTPRequest EXCEPTION";
+				Toast toast = Toast.makeText(context, toastText, Toast.LENGTH_LONG);
+				toast.show();
+				e.printStackTrace();
+			}
+			return false;
 	}
 	
 	private String current_recipient = null;
@@ -364,10 +394,12 @@ public class MeetyMain extends Activity {
 		final EditText recipientUsernameText = (EditText) findViewById(R.id.meety_main_username);
 		final Button startCallButton = (Button) findViewById(R.id.meety_main_session_call_button);
 		final Button cancelCallButton = (Button) findViewById(R.id.meety_main_session_cancel_button);
+		final Button logoutButton = (Button) findViewById(R.id.meety_main_session_logout_button);
 		final ProgressBar progressBar = (ProgressBar) findViewById(R.id.meeety_main_progress);
 		recipientUsernameText.setVisibility(View.INVISIBLE);
 		startCallButton.setVisibility(View.INVISIBLE);
 		cancelCallButton.setVisibility(View.INVISIBLE);
+		logoutButton.setVisibility(View.INVISIBLE);
 		progressBar.setVisibility(View.VISIBLE);
 		
 		if ( !doIsLoggedHTTPRequest() ){
@@ -407,10 +439,12 @@ public class MeetyMain extends Activity {
 		final EditText recipientUsernameText = (EditText) findViewById(R.id.meety_main_username);
 		final Button startCallButton = (Button) findViewById(R.id.meety_main_session_call_button);
 		final Button cancelCallButton = (Button) findViewById(R.id.meety_main_session_cancel_button);
+		final Button logoutButton = (Button) findViewById(R.id.meety_main_session_logout_button);
 		final ProgressBar progressBar = (ProgressBar) findViewById(R.id.meeety_main_progress);
 		progressBar.setVisibility(View.INVISIBLE);
 		recipientUsernameText.setVisibility(View.VISIBLE);
 		startCallButton.setVisibility(View.VISIBLE);
+		logoutButton.setVisibility(View.VISIBLE);
 		cancelCallButton.setVisibility(View.INVISIBLE);
 
 		this.handler = new Handler();
@@ -443,6 +477,8 @@ public class MeetyMain extends Activity {
 			startCallButton.setVisibility(View.INVISIBLE);
 			final Button cancelCallButton = (Button) findViewById(R.id.meety_main_session_cancel_button);
 			cancelCallButton.setVisibility(View.VISIBLE);
+			final Button logoutButton = (Button) findViewById(R.id.meety_main_session_logout_button);
+			logoutButton.setVisibility(View.INVISIBLE);
 			final ProgressBar progressBar = (ProgressBar) findViewById(R.id.meeety_main_progress);
 			progressBar.setVisibility(View.VISIBLE);
 			recipientUsernameText.setEnabled(false);
@@ -481,6 +517,8 @@ public class MeetyMain extends Activity {
 			startCallButton.setVisibility(View.VISIBLE);
 			final Button cancelCallButton = (Button) findViewById(R.id.meety_main_session_cancel_button);
 			cancelCallButton.setVisibility(View.INVISIBLE);
+			final Button logoutButton = (Button) findViewById(R.id.meety_main_session_logout_button);
+			logoutButton.setVisibility(View.VISIBLE);
 			final ProgressBar progressBar = (ProgressBar) findViewById(R.id.meeety_main_progress);
 			progressBar.setVisibility(View.INVISIBLE);
 
@@ -496,6 +534,41 @@ public class MeetyMain extends Activity {
 		else{
 
 			toastText = "Could not cancel call to "+current_recipient+"...";
+			Toast toast = Toast.makeText(context, toastText, duration);
+			toast.show();
+		}
+		
+	}
+	
+	public void logout(View view) {
+
+		Context context = getApplicationContext();
+		CharSequence toastText;
+		int duration = Toast.LENGTH_SHORT;
+		
+		if ( doLogoutHTTPRequest(context) ){
+			
+			toastText = "Just logged out of Meety!";
+			Toast toast = Toast.makeText(context, toastText, duration);
+			toast.show();
+
+			MeetyMain.WAIT_FOR_CALL = false;
+			MeetyMain.WAIT_FOR_RESPONSE = false;
+			handler.postDelayed(new Runnable(){
+
+				@Override
+				public void run() {
+					Intent loginActivity = new Intent();
+					loginActivity.setClass(getApplicationContext(), MeetyLogin.class);
+					startActivityForResult(loginActivity, MeetyLogin.REQUEST_CODE);
+				}
+				
+			}, 10);
+			
+		}
+		else{
+
+			toastText = "Could not logout!";
 			Toast toast = Toast.makeText(context, toastText, duration);
 			toast.show();
 		}
