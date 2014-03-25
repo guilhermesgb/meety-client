@@ -145,6 +145,9 @@ public class MeetyMain extends Activity {
 										Toast toast = Toast.makeText(context, toastText, Toast.LENGTH_SHORT);
 										toast.show();
 										dialog.cancel();
+										Intent meetySessionActivity = new Intent();
+										meetySessionActivity.setClass(context, MeetySession.class);
+										activity.startActivityForResult(meetySessionActivity, MeetySession.REQUEST_CODE);
 									}
 									else{
 										CharSequence toastText = sender+" has cancelled the call...";
@@ -164,6 +167,7 @@ public class MeetyMain extends Activity {
 
 									handler.postDelayed(new Runnable() {
 										public void run() {
+											MeetyMain.WAIT_FOR_CALL = true;
 											handler.postDelayed(new MonitorCalls(handler, context, activity), 5000);
 										}
 									}, 5000);
