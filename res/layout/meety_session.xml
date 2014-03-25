@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#0099cc"
-    tools:context=".MeetySessionActivity" >
+    tools:context=".MeetySession" >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,7 +13,7 @@
         <!-- First row -->
 
         <RelativeLayout
-            android:id="@+id/maplayout"
+            android:id="@+id/meety_session_maplayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="0.8" >
@@ -24,13 +24,13 @@
         <!-- Second row -->
 
         <RelativeLayout
-            android:id="@+id/maplayout"
+            android:id="@+id/meety_session_maplayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="0.1" >
 
             <fragment
-                android:id="@+id/id_googlemap"
+                android:id="@+id/meety_session_googlemap"
                 android:name="com.google.android.gms.maps.MapFragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
@@ -44,7 +44,7 @@
             android:layout_weight="0.8" >
 
             <TextView
-                android:id="@+id/logo_MS"
+                android:id="@+id/meety_session_logo"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_alignParentBottom="true"

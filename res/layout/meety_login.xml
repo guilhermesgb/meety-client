@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_light_blue"
-    tools:context=".LoginActivity" >
+    tools:context=".MeetyLogin" >
 	
     <!--
      This FrameLayout is divided by three RelativeLayout
@@ -25,7 +25,7 @@
             android:layout_weight="0.4" >
 			
             <EditText
-                android:id="@+id/text_username"
+                android:id="@+id/meety_login_username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
@@ -36,15 +36,15 @@
                 android:gravity="center"
                 android:selectAllOnFocus="true"
                 android:textColor="@color/button_dark_blue" 
-                android:hint="Username" />
+                android:hint="username" />
 			
             <EditText
-                android:id="@+id/text_password"
+                android:id="@+id/meety_login_password"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/text_username"
-                android:layout_alignRight="@+id/text_username"
-                android:layout_below="@+id/text_username"
+                android:layout_alignLeft="@+id/meety_login_username"
+                android:layout_alignRight="@+id/meety_login_username"
+                android:layout_below="@+id/meety_login_username"
                 android:layout_marginTop="24dp"
                 android:background="@color/white"
                 android:ems="10"
@@ -52,7 +52,7 @@
                 android:inputType="textPassword"
                 android:selectAllOnFocus="true"
                 android:textColor="@color/button_dark_blue" 
-                android:hint="Password" />
+                android:hint="password" />
         </RelativeLayout>
 		
         <!-- Second row -->
@@ -60,9 +60,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="0.4" >
-			
+            
             <Button
-                android:id="@+id/button_log_in"
+                android:id="@+id/meety_login_login_button"
                 style="?buttonBarButtonStyle"
                 android:layout_width="250dp"
                 android:layout_height="70dp"
@@ -70,22 +70,31 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="16dp"
                 android:background="@color/button_dark_blue"
-                android:text="@string/log_in_button_name"
+                android:text="login"
                 android:textSize="30sp"
                 android:textStyle="bold" 
                 android:onClick="attemptLogin"/>
 			
             <Button
-                android:id="@+id/button_sign_up"
+                android:id="@+id/meety_login_signup_button"
                 android:layout_width="150dp"
                 android:layout_height="40dp"
-                android:layout_below="@+id/button_log_in"
+                android:layout_below="@+id/meety_login_login_button"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="30dp"
                 android:background="@color/button_dark_blue"
-                android:text="@string/sign_up_button_name"
+                android:text="sign up"
                 android:textStyle="bold" 
-                android:onClick="signUpScreen"/>
+                android:onClick="attemptSignUp"/>
+
+            <ProgressBar
+                android:id="@+id/meety_login_progress"
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/meety_login_login_button"
+                android:layout_centerHorizontal="true" />
+
         </RelativeLayout>
 		
         <!-- Third row -->
@@ -96,7 +105,7 @@
             android:layout_weight="0.5" >
 			
             <TextView
-                android:id="@+id/logo_meety_log_in"
+                android:id="@+id/meety_login_logo"
                 android:layout_width="match_parent"
                 android:layout_height="79dp"
                 android:layout_alignParentBottom="true"

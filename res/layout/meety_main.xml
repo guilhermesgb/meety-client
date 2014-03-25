@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#0099cc"
-    tools:context=".LoggedActivity" >
+    tools:context=".MeetyMain" >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,7 +18,7 @@
             android:layout_weight="0.4" >
 
             <EditText
-                android:id="@+id/text_recipient_username"
+                android:id="@+id/meety_main_username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
@@ -26,7 +26,7 @@
                 android:background="@color/white"
                 android:ems="10"
                 android:gravity="center"
-                android:hint="Username"
+                android:hint="username"
                 android:inputType="text"
                 android:selectAllOnFocus="true"
                 android:textColor="@color/button_dark_blue" />
@@ -41,7 +41,7 @@
             android:layout_weight="0.4" >
             
             <Button
-                android:id="@+id/button_session_request"
+                android:id="@+id/meety_main_session_call_button"
                 style="?buttonBarButtonStyle"
                 android:layout_width="250dp"
                 android:layout_height="70dp"
@@ -49,11 +49,30 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="16dp"
                 android:background="@color/button_dark_blue"
-                android:onClick="sessionRequest"
-                android:text="Session Request"
+                android:onClick="sessionCall"
+                android:text="start call"
                 android:textSize="30sp"
                 android:textStyle="bold" />
 
+			<Button
+			    android:id="@+id/meety_main_session_cancel_button"
+			    android:layout_width="150dp"
+			    android:layout_height="40dp"
+			    android:layout_alignParentBottom="true"
+			    android:layout_centerHorizontal="true"
+			    android:background="@color/button_dark_blue"
+			    android:onClick="cancelCall"
+			    android:text="cancel call"
+			    android:textStyle="bold" />
+
+			<ProgressBar
+			    android:id="@+id/meeety_main_progress"
+			    style="?android:attr/progressBarStyleLarge"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_alignTop="@+id/meety_main_session_call_button"
+			    android:layout_centerHorizontal="true" />
+            
         </RelativeLayout>
 
         <!-- Third row -->
@@ -64,7 +83,7 @@
             android:layout_weight="0.5" >
 
             <TextView
-                android:id="@+id/fullscreen_content"
+                android:id="@+id/meety_main_logo"
                 android:layout_width="match_parent"
                 android:layout_height="79dp"
                 android:layout_alignParentBottom="true"

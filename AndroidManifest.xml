@@ -34,9 +34,9 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="meety.client.LoginActivity"
+            android:name="meety.client.MeetyMain"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/app_name"
+            android:label="Meety"
             android:screenOrientation="portrait"
             android:theme="@style/FullscreenTheme" >
             <intent-filter>
@@ -46,81 +46,20 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="meety.client.LoggedActivity"
+            android:name="meety.client.MeetyLogin"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_logged_in"
-            android:screenOrientation="portrait"
-            android:theme="@style/FullscreenTheme" >
-            <intent-filter>
-				<action android:name="com.google.android.c2dm.intent.REGISTRATION" />
-				<category android:name="meety.client" />
-			</intent-filter>
-        </activity>
-        <activity
-            android:name="meety.client.AttemptingLoginActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_attempting_log_in"
+            android:label="Meety"
             android:screenOrientation="portrait"
             android:theme="@style/FullscreenTheme" >
         </activity>
         <activity
-            android:name="meety.client.MeetySessionActivity"
+            android:name="meety.client.MeetySession"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_meety_session"
-            android:theme="@style/FullscreenTheme" >
-        </activity>
-        <activity
-            android:name="meety.client.AttemptingMeetySessionActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_attempting_meety_session"
+            android:label="Meety"
             android:screenOrientation="portrait"
             android:theme="@style/FullscreenTheme" >
-        </activity>
-		<activity
-            android:name="meety.client.SignUpActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_sign_up" 
-            android:screenOrientation="portrait"
-            android:theme="@style/FullscreenTheme"  >
         </activity>
         		
-        <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
-        <meta-data
-            android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyCpPRUm8gR_xForKOwHR2o7OTEJz-zCejA" />
-
-        <receiver
-            android:name="com.google.android.gcm.GCMBroadcastReceiver"
-            android:permission="com.google.android.c2dm.permission.SEND" >
-            <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
-                <category android:name="meety.client" />
-            </intent-filter>
-        </receiver>
-        
-        <service android:name=".GCMIntentServiceOld" />
-
-        <!--
-          WakefulBroadcastReceiver that will receive intents from GCM
-          services and hand them to the custom IntentService.
-
-          The com.google.android.c2dm.permission.SEND permission is necessary
-          so only GCM services can send data messages for the app.
-        -->
-<!--         <receiver -->
-<!--             android:name=".GcmBroadcastReceiver" -->
-<!--             android:permission="com.google.android.c2dm.permission.SEND" > -->
-<!--             <intent-filter> -->
-<!--                 Receives the actual messages. -->
-<!--                 <action android:name="com.google.android.c2dm.intent.RECEIVE" /> -->
-<!--                 <category android:name="com.google.android.gcm.demo.app" /> -->
-<!--             </intent-filter> -->
-<!--         </receiver> -->
-<!--         <service android:name=".GcmIntentService" /> -->
-
     </application>
 
 </manifest>
