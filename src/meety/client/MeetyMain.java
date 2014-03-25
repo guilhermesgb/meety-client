@@ -273,7 +273,7 @@ public class MeetyMain extends Activity {
 						toast.show();
 						
 						Intent meetySessionActivity = new Intent();
-						meetySessionActivity.setClass(context, MeetyLogin.class);
+						meetySessionActivity.setClass(context, MeetySession.class);
 						activity.startActivityForResult(meetySessionActivity, MeetySession.REQUEST_CODE);
 					}
 					else if ( call.get("recipient").equals(recipient) && call.get("status").equals("denied") ){
