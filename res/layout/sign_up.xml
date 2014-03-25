@@ -100,7 +100,7 @@
 		                 android:textColor="@color/button_dark_blue" />
 
 		             <EditText
-		                 android:id="@+id/text_register_username"
+		                 android:id="@+id/text_recipient_username"
 		                 android:layout_width="wrap_content"
 		                 android:layout_height="wrap_content"
 		                 android:layout_gravity="center"

@@ -3,7 +3,6 @@ package meety.client;
 import java.util.HashMap;
 import java.util.Map;
 
-import meety.client.gcm.GCMUtils;
 import meety.client.http.HttpUtils;
 
 import org.json.JSONException;
@@ -74,12 +73,13 @@ public class AttemptingLoginActivity extends Activity {
 		String username = intentFromPreviousActivity.getStringExtra("username");
 		String password = intentFromPreviousActivity.getStringExtra("password");
 		
-		if ( doLoginHTTPRequest(username, password) ){
-				GCMUtils.issueGCMRegistration(this);
+		if (doLoginHTTPRequest(username, password) /*|| username.equals("username") && password.equals("password")*/){
+//				GCMUtils.issueGCMRegistration(this);
 				callLoggedInActivity();
 				return;
-		}
-		denyLogIn();
+		}else{
+			denyLogIn();	
+		}	
 	}
 
 	

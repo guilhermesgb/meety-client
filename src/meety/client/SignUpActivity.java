@@ -82,7 +82,7 @@ public class SignUpActivity extends Activity {
 	
 	public void register(View view){
 		
-		final EditText usernameText = (EditText) findViewById(R.id.text_register_username);
+		final EditText usernameText = (EditText) findViewById(R.id.text_recipient_username);
 		final EditText passwordText = (EditText) findViewById(R.id.text_register_password);
 		
 		Context context = getApplicationContext();
