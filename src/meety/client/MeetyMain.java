@@ -44,13 +44,19 @@ public class MeetyMain extends Activity {
 			try {
 				Integer responseCode = (Integer) response.get("code");
 				String responseBody = (String) response.get("body");
-				
+				CharSequence toastText = "Code: "+responseCode;
+				Toast.makeText(getApplicationContext(), toastText, Toast.LENGTH_SHORT).show();
+				toastText = "Body: "+responseBody;
+				Toast.makeText(getApplicationContext(), toastText, Toast.LENGTH_SHORT).show();				
+				String requestPayload = (String) response.get("payload_received");
+				toastText = "Payload: "+requestPayload;
+				Toast.makeText(getApplicationContext(), toastText, Toast.LENGTH_SHORT).show();
 				if ( responseCode == 200 ){
 					String logged = new JSONObject(responseBody).getString("status").split(" ")[0];
 					if ( !logged.equals("nobody") ){
 						Context context = getApplicationContext();
 						int duration = Toast.LENGTH_SHORT;
-						CharSequence toastText = "Welcome back to Meety, "+logged+"...";
+						toastText = "Welcome back to Meety, "+logged+"...";
 						Toast toast = Toast.makeText(context, toastText, duration);
 						toast.show();
 						return true;
@@ -59,7 +65,7 @@ public class MeetyMain extends Activity {
 			} catch (Exception e) {
 				System.out.println("doIsLoggedHTTPRequest EXCEPTION");
 				CharSequence toastText = "doIsLoggedHTTPRequest EXCEPTION";
-				Toast toast = Toast.makeText(getApplicationContext(), toastText, Toast.LENGTH_LONG);
+				Toast toast = Toast.makeText(getApplicationContext(), toastText, Toast.LENGTH_SHORT);
 				toast.show();
 				e.printStackTrace();
 			}
@@ -72,16 +78,16 @@ public class MeetyMain extends Activity {
 		Map<String, String> pairs = new HashMap<String, String>();
 		pairs.put("Host", "meety-server.herokuapp.com");
 		pairs.put("Accept", "application/json");
-		pairs.put("Content-Type", "application/json");
+		pairs.put("Content-Type", "application/json; charset=utf-8;");
 		JSONObject headers = new JSONObject(pairs);
 
 		pairs.clear();
 		pairs.put("username", username);
 		pairs.put("answer", answer);
-		JSONObject payload = new JSONObject(pairs);
+		JSONObject payload_received = new JSONObject(pairs);
 		
 		JSONObject response = HttpUtils.
-				doPOSTHttpRequest("http://meety-server.herokuapp.com/answer", headers, payload);
+				doPOSTHttpRequest("http://meety-server.herokuapp.com/answer", headers, payload_received);
 
 		if ( response == null ){
 			return false;
@@ -89,11 +95,13 @@ public class MeetyMain extends Activity {
 			try {
 				Integer responseCode = (Integer) response.get("code");
 				String responseBody = (String) response.get("body");
-
-				int duration = Toast.LENGTH_SHORT;
-				CharSequence toastText = "RSP_CODE: "+String.valueOf(responseCode)+" -- "+responseBody;
-				Toast toast = Toast.makeText(context, toastText, duration);
-				toast.show();
+				CharSequence toastText = "Code: "+responseCode;
+				Toast.makeText(context, toastText, Toast.LENGTH_SHORT).show();
+				toastText = "Body: "+responseBody;
+				Toast.makeText(context, toastText, Toast.LENGTH_SHORT).show();
+				String requestPayload = (String) response.get("payload_received");
+				toastText = "Payload: "+requestPayload;
+				Toast.makeText(context, toastText, Toast.LENGTH_SHORT).show();
 				
 				if ( responseCode == 200 ){
 					return true;
@@ -111,7 +119,7 @@ public class MeetyMain extends Activity {
 		
 		Map<String, String> pairs = new HashMap<String, String>();
 		pairs.put("Host", "meety-server.herokuapp.com");
-		pairs.put("Content-Type", "application/json");
+		pairs.put("Content-Type", "application/json; charset=utf-8");
 		pairs.put("Accept", "application/json");
 		JSONObject headers = new JSONObject(pairs);
 
@@ -159,6 +167,13 @@ public class MeetyMain extends Activity {
 										CharSequence toastText = sender+" has cancelled the call...";
 										Toast toast = Toast.makeText(context, toastText, Toast.LENGTH_SHORT);
 										toast.show();
+										
+										handler.postDelayed(new Runnable() {
+											public void run() {
+												MeetyMain.WAIT_FOR_CALL = true;
+												handler.postDelayed(new MonitorCalls(handler, context, activity), 5000);
+											}
+										}, 5000);
 									}
 								}
 							})
@@ -193,7 +208,7 @@ public class MeetyMain extends Activity {
 				MeetyMain.WAIT_FOR_CALL = false;
 				System.out.println("doMonitorCallsHTTPRequest EXCEPTION");
 				CharSequence toastText = "doMonitorCallsHTTPRequest EXCEPTION";
-				Toast toast = Toast.makeText(context, toastText, Toast.LENGTH_LONG);
+				Toast toast = Toast.makeText(context, toastText, Toast.LENGTH_SHORT);
 				toast.show();
 				e.printStackTrace();
 			}
@@ -224,23 +239,31 @@ public class MeetyMain extends Activity {
 
 		Map<String, String> pairs = new HashMap<String, String>();
 		pairs.put("Host", "meety-server.herokuapp.com");
-		pairs.put("Content-Type", "application/json");
+		pairs.put("Content-Type", "application/json; charset=utf-8");
 		pairs.put("Accept", "application/json");
 		JSONObject headers = new JSONObject(pairs);
 
 		pairs.clear();
 		pairs.put("username", username);
 		pairs.put("action", action);
-		JSONObject payload = new JSONObject(pairs);
+		JSONObject payload_received = new JSONObject(pairs);
 		
 		JSONObject response = HttpUtils.
-				doPOSTHttpRequest("http://meety-server.herokuapp.com/call", headers, payload);
+				doPOSTHttpRequest("http://meety-server.herokuapp.com/call", headers, payload_received);
 
 		if ( response == null ){
 			return false;
 		} else
 			try {
 				Integer responseCode = (Integer) response.get("code");
+				String responseBody = (String) response.get("body");
+				CharSequence toastText = "Code: "+responseCode;
+				Toast.makeText(getApplicationContext(), toastText, Toast.LENGTH_SHORT).show();
+				toastText = "Body: "+responseBody;
+				Toast.makeText(getApplicationContext(), toastText, Toast.LENGTH_SHORT).show();
+				String requestPayload = (String) response.get("payload_received");
+				toastText = "Payload: "+requestPayload;
+				Toast.makeText(getApplicationContext(), toastText, Toast.LENGTH_SHORT).show();
 				if ( responseCode == 200 ){
 					return true;
 				}
@@ -250,7 +273,7 @@ public class MeetyMain extends Activity {
 			} catch (Exception e) {
 				System.out.println("doCallHTTPRequest EXCEPTION");
 				CharSequence toastText = "doCallHTTPRequest EXCEPTION";
-				Toast toast = Toast.makeText(getApplicationContext(), toastText, Toast.LENGTH_LONG);
+				Toast toast = Toast.makeText(getApplicationContext(), toastText, Toast.LENGTH_SHORT);
 				toast.show();
 				e.printStackTrace();
 			}
@@ -263,7 +286,7 @@ public class MeetyMain extends Activity {
 		
 		Map<String, String> pairs = new HashMap<String, String>();
 		pairs.put("Host", "meety-server.herokuapp.com");
-		pairs.put("Content-Type", "application/json");
+		pairs.put("Content-Type", "application/json; charset=utf-8");
 		pairs.put("Accept", "application/json");
 		JSONObject headers = new JSONObject(pairs);
 
@@ -322,7 +345,7 @@ public class MeetyMain extends Activity {
 				MeetyMain.WAIT_FOR_RESPONSE = false;
 				System.out.println("doWaitForResponseHTTPRequest EXCEPTION");
 				CharSequence toastText = "doWaitForResponseHTTPRequest EXCEPTION";
-				Toast toast = Toast.makeText(context, toastText, Toast.LENGTH_LONG);
+				Toast toast = Toast.makeText(context, toastText, Toast.LENGTH_SHORT);
 				toast.show();
 				e.printStackTrace();
 			}
@@ -376,13 +399,21 @@ public class MeetyMain extends Activity {
 		} else
 			try {
 				Integer responseCode = (Integer) response.get("code");
+				String responseBody = (String) response.get("body");
+				CharSequence toastText = "Code: "+responseCode;
+				Toast.makeText(context, toastText, Toast.LENGTH_SHORT).show();
+				toastText = "Body: "+responseBody;
+				Toast.makeText(context, toastText, Toast.LENGTH_SHORT).show();
+				String requestPayload = (String) response.get("payload_received");
+				toastText = "Payload: "+requestPayload;
+				Toast.makeText(context, toastText, Toast.LENGTH_SHORT).show();
 				if ( responseCode == 200 ){
 					return true;
 				}
 			} catch (Exception e) {
 				System.out.println("doFinishSessionHTTPRequest EXCEPTION");
 				CharSequence toastText = "doFinishSessionHTTPRequest EXCEPTION";
-				Toast toast = Toast.makeText(context, toastText, Toast.LENGTH_LONG);
+				Toast toast = Toast.makeText(context, toastText, Toast.LENGTH_SHORT);
 				toast.show();
 				e.printStackTrace();
 			}
@@ -402,13 +433,21 @@ public class MeetyMain extends Activity {
 		} else
 			try {
 				Integer responseCode = (Integer) response.get("code");
+				String responseBody = (String) response.get("body");
+				CharSequence toastText = "Code: "+responseCode;
+				Toast.makeText(context, toastText, Toast.LENGTH_SHORT).show();
+				toastText = "Body: "+responseBody;
+				Toast.makeText(context, toastText, Toast.LENGTH_SHORT).show();
+				String requestPayload = (String) response.get("payload_received");
+				toastText = "Payload: "+requestPayload;
+				Toast.makeText(context, toastText, Toast.LENGTH_SHORT).show();
 				if ( responseCode == 200 ){
 					return true;
 				}
 			} catch (Exception e) {
 				System.out.println("doLoginHTTPRequest EXCEPTION");
 				CharSequence toastText = "doLoginHTTPRequest EXCEPTION";
-				Toast toast = Toast.makeText(context, toastText, Toast.LENGTH_LONG);
+				Toast toast = Toast.makeText(context, toastText, Toast.LENGTH_SHORT);
 				toast.show();
 				e.printStackTrace();
 			}
@@ -460,12 +499,12 @@ public class MeetyMain extends Activity {
 			}else{
 				if ( doFinishSessionHTTPRequest(getApplicationContext()) ){
 					CharSequence toastText = "You've just finished the Meety Session";
-					Toast toast = Toast.makeText(getApplicationContext(), toastText, Toast.LENGTH_LONG);
+					Toast toast = Toast.makeText(getApplicationContext(), toastText, Toast.LENGTH_SHORT);
 					toast.show();
 				}
 				else{
 					CharSequence toastText = "IT SEEMS LIKE THE SESSION WAS ABORTED UNEXPECTEDLY";
-					Toast toast = Toast.makeText(getApplicationContext(), toastText, Toast.LENGTH_LONG);
+					Toast toast = Toast.makeText(getApplicationContext(), toastText, Toast.LENGTH_SHORT);
 					toast.show();
 				}
 				startActivity();

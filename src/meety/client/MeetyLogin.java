@@ -28,7 +28,7 @@ public class MeetyLogin extends Activity {
 
 		Map<String, String> pairs = new HashMap<String, String>();
 		pairs.put("Host", "meety-server.herokuapp.com");
-		pairs.put("Content-Type", "application/json");
+		pairs.put("Content-Type", "application/json; charset=utf-8");
 		pairs.put("Accept", "application/json");
 		JSONObject headers = new JSONObject(pairs);
 
@@ -45,13 +45,21 @@ public class MeetyLogin extends Activity {
 		} else
 			try {
 				Integer responseCode = (Integer) response.get("code");
+				String responseBody = (String) response.get("body");
+				CharSequence toastText = "Code: "+responseCode;
+				Toast.makeText(getApplicationContext(), toastText, Toast.LENGTH_SHORT).show();
+				toastText = "Body: "+responseBody;
+				Toast.makeText(getApplicationContext(), toastText, Toast.LENGTH_SHORT).show();
+				String responsePayload = (String) response.get("payload_received");
+				toastText = "Payload: "+responsePayload;
+				Toast.makeText(getApplicationContext(), toastText, Toast.LENGTH_SHORT).show();
 				if ( responseCode == 200 ){
 					return true;
 				}
 			} catch (Exception e) {
 				System.out.println("doRegisterHTTPRequest EXCEPTION");
 				CharSequence toastText = "doRegisterHTTPRequest EXCEPTION";
-				Toast toast = Toast.makeText(getApplicationContext(), toastText, Toast.LENGTH_LONG);
+				Toast toast = Toast.makeText(getApplicationContext(), toastText, Toast.LENGTH_SHORT);
 				toast.show();
 				e.printStackTrace();
 			}
@@ -73,13 +81,21 @@ public class MeetyLogin extends Activity {
 		} else
 			try {
 				Integer responseCode = (Integer) response.get("code");
+				String responseBody = (String) response.get("body");
+				CharSequence toastText = "Code: "+responseCode;
+				Toast.makeText(getApplicationContext(), toastText, Toast.LENGTH_SHORT).show();
+				toastText = "Body: "+responseBody;
+				Toast.makeText(getApplicationContext(), toastText, Toast.LENGTH_SHORT).show();
+				String responsePayload = (String) response.get("payload_received");
+				toastText = "Payload: "+responsePayload;
+				Toast.makeText(getApplicationContext(), toastText, Toast.LENGTH_SHORT).show();
 				if ( responseCode == 200 ){
 					return true;
 				}
 			} catch (Exception e) {
 				System.out.println("doLoginHTTPRequest EXCEPTION");
 				CharSequence toastText = "doLoginHTTPRequest EXCEPTION";
-				Toast toast = Toast.makeText(getApplicationContext(), toastText, Toast.LENGTH_LONG);
+				Toast toast = Toast.makeText(getApplicationContext(), toastText, Toast.LENGTH_SHORT);
 				toast.show();
 				e.printStackTrace();
 			}

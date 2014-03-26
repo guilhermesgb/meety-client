@@ -1,12 +1,10 @@
 package meety.client;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 import meety.client.http.HttpUtils;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.app.Activity;
@@ -31,7 +29,7 @@ public class MeetySession extends Activity {
 
 	public static final int REQUEST_CODE = 102;
 	public static final int RESULT_CODE_OK = 1020;
-	public static boolean MEETY_SESSION_IN_PROGRESS = true;
+	public static boolean MEETY_SESSION_IN_PROGRESS;
 	
 	private static boolean doTrackFriendHTTPRequest(Context context, final MeetySession activity){
 
@@ -61,20 +59,19 @@ public class MeetySession extends Activity {
 			try {
 				Integer responseCode = (Integer) response.get("code");
 				String responseBody = (String) response.get("body");
+				CharSequence toastText = "Code: "+responseCode;
+				Toast.makeText(context, toastText, Toast.LENGTH_SHORT).show();
+				toastText = "Body: "+responseBody;
+				Toast.makeText(context, toastText, Toast.LENGTH_SHORT).show();
+				String responsePayload = (String) response.get("payload_received");
+				toastText = "Payload: "+responsePayload;
+				Toast.makeText(context, toastText, Toast.LENGTH_SHORT).show();
 				
 				if ( responseCode == 200 ){
-					JSONArray tracked = new JSONArray(responseBody);
+					JSONObject tracked = new JSONObject(responseBody);
+					String position = tracked.getString("position");
 					
-					String username = null, position = null;
-					for ( int i=0; i<tracked.length(); i++ ){
-						JSONObject users = tracked.getJSONObject(i);
-						Iterator<String> usernames = users.keys();
-						while ( usernames.hasNext() ){
-							username = usernames.next();
-							position = users.getString(username);
-						}
-					}
-					if ( username != null && position != null ){
+					if ( position != null ){
 
 						double latitude = Double.valueOf(position.split(",")[0].trim());
 						double longitude = Double.valueOf(position.split(",")[1].trim());
@@ -102,7 +99,7 @@ public class MeetySession extends Activity {
 			} catch (Exception e) {
 				System.out.println("doTrackFriendHTTPRequest EXCEPTION");
 				CharSequence toastText = "doTrackFriendHTTPRequest EXCEPTION";
-				Toast toast = Toast.makeText(context, toastText, Toast.LENGTH_LONG);
+				Toast toast = Toast.makeText(context, toastText, Toast.LENGTH_SHORT);
 				toast.show();
 				e.printStackTrace();
 			}
@@ -125,7 +122,7 @@ public class MeetySession extends Activity {
 		public void run() {
 			if ( MeetySession.doTrackFriendHTTPRequest(context, activity) ){
 				CharSequence toastText = "Meety session has come to an end...";
-				Toast toast = Toast.makeText(context, toastText, Toast.LENGTH_LONG);
+				Toast toast = Toast.makeText(context, toastText, Toast.LENGTH_SHORT);
 				toast.show();
 			}
 			if ( MeetySession.MEETY_SESSION_IN_PROGRESS ){

@@ -9,10 +9,13 @@ import java.net.CookieHandler;
 import java.net.CookieManager;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.util.Iterator;
 import java.util.concurrent.ExecutionException;
+
 import org.json.JSONObject;
+
 import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -49,6 +52,9 @@ public abstract class HttpUtils {
 				String method = params[0];
 				System.out.println("URL FOUND: "+params[1]);
 				URL url = new URL(params[1]);
+				URI uri = new URI(url.getProtocol(), url.getUserInfo(), url.getHost(),
+						url.getPort(), url.getPath(), url.getQuery(), url.getRef());
+				url = uri.toURL();
 				System.out.println("HEADERS: "+params[2].toString());
 				String headers = params[2];
 				String payload = params[3];
@@ -66,7 +72,7 @@ public abstract class HttpUtils {
 							String key = (String) keys.next();
 							String value = (String) JSONHeaders.get(key);
 							urlConn.setRequestProperty(key, value);
-
+							System.out.println("ADDING HEADER: "+key+", "+value);
 						}
 					}
 					
@@ -76,6 +82,7 @@ public abstract class HttpUtils {
 						if ( payload != null ){
 							urlConn.setDoOutput(true);
 							urlConn.setChunkedStreamingMode(payload.length());
+//							payload = URLEncoder.encode(payload, "utf-8");
 							OutputStream out = new BufferedOutputStream(urlConn.getOutputStream(), payload.length());
 							out.write(payload.getBytes());
 						}
@@ -102,10 +109,18 @@ public abstract class HttpUtils {
 						e.printStackTrace();
 					}
 					
+					if ( responseCode == 200 && responseBody.contains("error") ){
+						responseCode = 400;
+					}
+					
 					JSONObject JSONResponse = new JSONObject();
 					JSONResponse.put("message", responseMessage);
 					JSONResponse.put("code", responseCode);
 					JSONResponse.put("body", responseBody);
+					if ( payload == null ){
+						payload = "Nothing";
+					}
+					JSONResponse.put("payload_received", payload);
 					return JSONResponse;
 				}
 				finally{
@@ -141,8 +156,8 @@ public abstract class HttpUtils {
 
 		HttpRequestExecutor executor = (HttpRequestExecutor) new HttpRequestExecutor();
 		executor.execute(method, url,
-				headers != null ? headers.toString() : null,
-				payload != null ? payload.toString() : null);
+				headers != null ? headers.toString().trim() : null,
+				payload != null ? payload.toString().trim() : null);
 
 		try {
 			return executor.get();
