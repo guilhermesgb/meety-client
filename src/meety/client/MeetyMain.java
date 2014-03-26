@@ -50,7 +50,7 @@ public class MeetyMain extends Activity {
 					if ( !logged.equals("nobody") ){
 						Context context = getApplicationContext();
 						int duration = Toast.LENGTH_SHORT;
-						CharSequence toastText = "Welcome to Meety, "+logged+"...";
+						CharSequence toastText = "Welcome back to Meety, "+logged+"...";
 						Toast toast = Toast.makeText(context, toastText, duration);
 						toast.show();
 						return true;
@@ -67,7 +67,7 @@ public class MeetyMain extends Activity {
 		}
 	}
 	
-	private static boolean doAnswerCallHTTPRequest(String username, String answer){
+	private static boolean doAnswerCallHTTPRequest(Context context, String username, String answer){
 
 		Map<String, String> pairs = new HashMap<String, String>();
 		pairs.put("Host", "meety-server.herokuapp.com");
@@ -88,7 +88,13 @@ public class MeetyMain extends Activity {
 		} else
 			try {
 				Integer responseCode = (Integer) response.get("code");
+				String responseBody = (String) response.get("body");
 
+				int duration = Toast.LENGTH_SHORT;
+				CharSequence toastText = "RSP_CODE: "+String.valueOf(responseCode)+" -- "+responseBody;
+				Toast toast = Toast.makeText(context, toastText, duration);
+				toast.show();
+				
 				if ( responseCode == 200 ){
 					return true;
 				}
@@ -140,7 +146,7 @@ public class MeetyMain extends Activity {
 							.setCancelable(false)
 							.setPositiveButton("Accept",new DialogInterface.OnClickListener() {
 								public void onClick(DialogInterface dialog,int id) {
-									if ( doAnswerCallHTTPRequest(sender, "accepted") ){
+									if ( doAnswerCallHTTPRequest(context, sender, "accepted") ){
 										CharSequence toastText = "You've just accepted call from "+sender+"...";
 										Toast toast = Toast.makeText(context, toastText, Toast.LENGTH_SHORT);
 										toast.show();
@@ -158,7 +164,7 @@ public class MeetyMain extends Activity {
 							})
 							.setNegativeButton("Decline",new DialogInterface.OnClickListener() {
 								public void onClick(DialogInterface dialog,int id) {
-									if ( doAnswerCallHTTPRequest(sender, "denied") ){
+									if ( doAnswerCallHTTPRequest(context, sender, "denied") ){
 										CharSequence toastText = "You've just denied call from "+sender+"...";
 										Toast toast = Toast.makeText(context, toastText, Toast.LENGTH_SHORT);
 										toast.show();
