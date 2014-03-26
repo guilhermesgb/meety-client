@@ -363,6 +363,32 @@ public class MeetyMain extends Activity {
 		
 	}
 	
+	private static boolean doFinishSessionHTTPRequest(Context context){
+
+		Map<String, String> pairs = new HashMap<String, String>();
+		pairs.put("Host", "meety-server.herokuapp.com");
+		pairs.put("Accept", "application/json");
+		JSONObject headers = new JSONObject(pairs);
+		
+		JSONObject response = HttpUtils.doPOSTHttpRequest("http://meety-server.herokuapp.com/session/finish", headers);
+		if ( response == null ){
+			return false;
+		} else
+			try {
+				Integer responseCode = (Integer) response.get("code");
+				if ( responseCode == 200 ){
+					return true;
+				}
+			} catch (Exception e) {
+				System.out.println("doFinishSessionHTTPRequest EXCEPTION");
+				CharSequence toastText = "doFinishSessionHTTPRequest EXCEPTION";
+				Toast toast = Toast.makeText(context, toastText, Toast.LENGTH_LONG);
+				toast.show();
+				e.printStackTrace();
+			}
+			return false;
+	}
+	
 	private static boolean doLogoutHTTPRequest(Context context){
 
 		Map<String, String> pairs = new HashMap<String, String>();
@@ -432,9 +458,16 @@ public class MeetyMain extends Activity {
 			if ( resultCode == MeetySession.RESULT_CODE_OK ){
 				startActivity();
 			}else{
-				CharSequence toastText = "IT SEEMS LIKE THE SESSION WAS ABORTED UNEXPECTEDLY";
-				Toast toast = Toast.makeText(getApplicationContext(), toastText, Toast.LENGTH_LONG);
-				toast.show();
+				if ( doFinishSessionHTTPRequest(getApplicationContext()) ){
+					CharSequence toastText = "You've just finished the Meety Session";
+					Toast toast = Toast.makeText(getApplicationContext(), toastText, Toast.LENGTH_LONG);
+					toast.show();
+				}
+				else{
+					CharSequence toastText = "IT SEEMS LIKE THE SESSION WAS ABORTED UNEXPECTEDLY";
+					Toast toast = Toast.makeText(getApplicationContext(), toastText, Toast.LENGTH_LONG);
+					toast.show();
+				}
 				startActivity();
 			}
 		}
